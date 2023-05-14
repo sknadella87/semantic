@@ -1,6 +1,13 @@
 name: Deploy Lambda Function
-on: [push]
-
+on:
+  pull_request:
+    branches:
+    - develop
+    - main
+  push:
+    branches:
+      - main
+      - develop
 jobs:
 
   lint:
@@ -21,7 +28,7 @@ jobs:
             flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
 
   build:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     needs: lint
     steps:
       - name: Check out code
